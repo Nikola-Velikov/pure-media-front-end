@@ -1,5 +1,5 @@
 import { Home } from "./components/home/Home";
-import { Navigation } from "./components/navbar/navbar";
+import { Navigation } from "./components/navbar/Navbar";
 import {Route, Routes } from "react-router-dom";
 import { News } from "./components/news/News";
 import { Details } from "./components/detailsNews/DetailsNews";
