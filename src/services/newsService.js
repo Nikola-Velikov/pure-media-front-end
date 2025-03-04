@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000/news";
+const baseUrl = "https://pure-media-backend.vercel.app";
 
 export const getNews = async (limit = 10, page = 1, fromDate = "", toDate = "") => {
     const url = new URL(baseUrl);
