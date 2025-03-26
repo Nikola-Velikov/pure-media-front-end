@@ -132,7 +132,11 @@ const getClassification = async (fullText) => {
             <div className="page-wrapper">
               <div className="blog-title-area text-center">
                 <span className="color-orange">
-               
+                {news.formatedCreatedAt && isFromYesterday(news.formatedCreatedAt) && (
+                    <a href="#" title="" style={{ fontSize: "20px" }}>
+                      От вчера
+                    </a>
+                  )}
                    
                   
                 </span>
