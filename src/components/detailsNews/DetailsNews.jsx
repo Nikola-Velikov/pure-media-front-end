@@ -12,11 +12,14 @@ import phrasesFile from "../../assets/fake_media_words.txt";
 import { useHighlight } from "../../contexts/HighlightContext";
 import DOMPurify from "dompurify"; // Import DOMPurify
 
+
 export function Details() {
   const { id } = useParams();
   const [news, setNews] = useState({});
   const [phrases, setPhrases] = useState([]);
   const { highlightEnabled } = useHighlight();
+  const [classificationResult, setClassificationResult] = useState(null); 
+  const [loading, setLoading] = useState(true);
 
   const sanitizeHTML = (html) => DOMPurify.sanitize(html); // Sanitize HTML content
 
@@ -34,7 +37,37 @@ export function Details() {
     }
     return text || "";
   };
-
+  const translatePrediction = (prediction) => {
+    switch (prediction.toLowerCase()) {
+      case 'neutral':
+        return 'неутрална';
+      case 'positive':
+        return 'положителна';
+      case 'negative':
+        return 'негативна';
+      default:
+        return prediction; // Return the prediction if it doesn't match any case
+    }
+  };
+  
+const getClassification = async (fullText) => {
+      try {
+        setLoading(true)
+        const classificationResponse = await fetch(
+          `https://puremediaai-production.up.railway.app/classify?text=${encodeURIComponent(fullText)}`
+        );
+  
+        if (!classificationResponse.ok) {
+          throw new Error('Failed to classify the text');
+        }
+  
+        const classificationResult = await classificationResponse.json();
+        setClassificationResult(classificationResult);
+        setLoading(false) // Save classification result in a separate state
+      } catch (err) {
+        console.error("Error fetching classification:", err.message);
+      }
+    };
   useEffect(() => {
     fetch(phrasesFile)
     .then((response) => response.text())
@@ -71,6 +104,7 @@ export function Details() {
             formattedNews.highlightedDescription = formattedNews.description;
           }
 
+          
           setNews(formattedNews);
         } else {
           console.error("Failed to fetch news:", data.error);
@@ -82,6 +116,13 @@ export function Details() {
 
     getNews();
   }, [id]);
+  useEffect(() => {
+    if (news && news.title && news.description) {
+      const fullText = `${news.title} ${news.description}`;
+      getClassification(fullText); // Fetch classification using the news text
+      
+    }
+  }, [news]);
 
   return (
     <section className="section single-wrapper">
@@ -91,11 +132,9 @@ export function Details() {
             <div className="page-wrapper">
               <div className="blog-title-area text-center">
                 <span className="color-orange">
-                  {news.formatedCreatedAt && isFromYesterday(news.formatedCreatedAt) && (
-                    <a href="#" title="" style={{ fontSize: "20px" }}>
-                      От вчера
-                    </a>
-                  )}
+               
+                   
+                  
                 </span>
                 <h3
                   dangerouslySetInnerHTML={{
@@ -113,6 +152,18 @@ export function Details() {
                       Публикувано от {news.media}
                     </a>
                   </small>
+                </div>
+                <div style={{justifyContent:"center", display:"flex"}}>
+
+                <span className="bg-primary text-white rounded-pill px-2 ml-2" style={{ width: "fit-content" }}>
+               <strong style={{fontSize: "1.3rem"}}>
+               {loading ? "Анализиране на новината..." : `Емоционална натовареност: `}
+                </strong>
+    <strong style={{fontSize:"1.3rem"}}>{loading ? "" : translatePrediction(classificationResult.prediction)}</strong>
+    {/* <strong style={{fontSize: '17px!important'}}>{loading ? "" : ` - ${classificationResult.confidence * 100}%`}</strong> */}
+  </span>
+
+
                 </div>
               </div>
               <div className="single-post-media">

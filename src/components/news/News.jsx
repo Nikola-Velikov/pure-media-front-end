@@ -5,6 +5,7 @@ import * as newsService from "../../services/newsService";
 import { formatDate, isFromYesterday } from "../../utils/formatDate";
 import { Link } from "react-router-dom";
 import { useHighlight } from "../../contexts/HighlightContext";
+
 export function News() {
     const [news, setNews] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
@@ -134,28 +135,51 @@ export function News() {
       <div className="news-item mb-4 p-3 border rounded-lg shadow-sm" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80px' }}>
         <p className="text-muted" style={{ textAlign: 'center', margin: 0 }}>
           <strong>{score[0]?.stats[0]}</strong> от <strong>{score[0]?.stats[1]}</strong> новини от <strong>Медиапул</strong> съдържат сензационни изрази и думи.  - {Math.ceil((score[0]?.stats[0]/score[0]?.stats[1])*100)} %
+          <br />
+          <span className="bg-danger text-white rounded-pill px-2 ml-2" style={{ fontSize: '0.9rem' }}>
+      {score[0]?.repeatedWords['Mediapool'].word} - {score[0]?.repeatedWords['Mediapool'].repeat} пъти
+    </span>
         </p>
       </div>
       <div className="news-item mb-4 p-3 border rounded-lg shadow-sm" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80px' }}>
         <p className="text-muted" style={{ textAlign: 'center', margin: 0 }}>
           <strong>{score[1]?.stats[0]}</strong> от <strong>{score[1]?.stats[1]}</strong> новини от <strong>Пик</strong> съдържат сензационни изрази и думи.  - {Math.ceil((score[1]?.stats[0]/score[1]?.stats[1])*100)} %
+          <br />
+          <span className="bg-danger text-white rounded-pill px-2 ml-2" style={{ fontSize: '0.9rem' }}>
+      {score[0]?.repeatedWords['pik'].word} - {score[0]?.repeatedWords['pik'].repeat} пъти
+    </span>
         </p>
       </div>
       <div className="news-item mb-4 p-3 border rounded-lg shadow-sm" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80px' }}>
         <p className="text-muted" style={{ textAlign: 'center', margin: 0 }}>
           <strong>{score[2]?.stats[0]}</strong> от <strong>{score[2]?.stats[1]}</strong> новини от <strong>Българско национално радио</strong> съдържат сензационни изрази и думи. - {Math.ceil((score[2]?.stats[0]/score[2]?.stats[1])*100)} %
+          <br />
+          <span className="bg-danger text-white rounded-pill px-2 ml-2" style={{ fontSize: '0.9rem' }}>
+      {score[0]?.repeatedWords['bnr'].word} - {score[0]?.repeatedWords['bnr'].repeat} пъти
+    </span>
         </p>
       </div>
       <div className="news-item mb-4 p-3 border rounded-lg shadow-sm" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80px' }}>
         <p className="text-muted" style={{ textAlign: 'center', margin: 0 }}>
           <strong>{score[3]?.stats[0]}</strong> от <strong>{score[3]?.stats[1]}</strong> новини от <strong>Дунавмост</strong> съдържат сензационни изрази и думи.  - {Math.ceil((score[3]?.stats[0]/score[3]?.stats[1])*100)} %
+          <br />
+          <span className="bg-danger text-white rounded-pill px-2 ml-2" style={{ fontSize: '0.9rem' }}>
+      {score[0]?.repeatedWords['dunavmost'].word} - {score[0]?.repeatedWords['dunavmost'].repeat} пъти
+    </span>
         </p>
       </div>
       <div className="news-item mb-4 p-3 border rounded-lg shadow-sm" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80px' }}>
         <p className="text-muted" style={{ textAlign: 'center', margin: 0 }}>
           <strong>{score[4]?.stats[0]}</strong> от <strong>{score[4]?.stats[1]}</strong> новини от <strong>24 часа</strong> съдържат сензационни изрази и думи.  - {Math.ceil((score[4]?.stats[0]/score[4]?.stats[1])*100)} %
+          <br />
+          <span className="bg-danger text-white rounded-pill px-2 ml-2" style={{ fontSize: '0.9rem' }}>
+      {score[0]?.repeatedWords['24chasa'].word} - {score[0]?.repeatedWords['24chasa'].repeat} пъти
+    </span>
         </p>
+        
+
       </div>
+      
     </div>
   </div>
 </div>
