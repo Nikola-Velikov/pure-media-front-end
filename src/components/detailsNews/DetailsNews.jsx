@@ -50,24 +50,31 @@ export function Details() {
     }
   };
   
-const getClassification = async (fullText) => {
-      try {
-        setLoading(true)
+  const getClassification = async (fullText) => {
+    try {
+        setLoading(true);
         const classificationResponse = await fetch(
-          `https://puremediaai-production.up.railway.app/classify?text=${encodeURIComponent(fullText)}`
+            "https://puremediaai-production.up.railway.app/classify",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ text: fullText }),
+            }
         );
-  
+
         if (!classificationResponse.ok) {
-          throw new Error('Failed to classify the text');
+            throw new Error("Failed to classify the text");
         }
-  
+
         const classificationResult = await classificationResponse.json();
         setClassificationResult(classificationResult);
-        setLoading(false) // Save classification result in a separate state
-      } catch (err) {
+        setLoading(false); // Save classification result in a separate state
+    } catch (err) {
         console.error("Error fetching classification:", err.message);
-      }
-    };
+    }
+};
   useEffect(() => {
     fetch(phrasesFile)
     .then((response) => response.text())
@@ -172,7 +179,7 @@ const getClassification = async (fullText) => {
               </div>
               <div className="single-post-media">
                 
-              {news.image_url ? (
+              {news.image_url && typeof news.image_url === "string" && !news.image_url.includes("undefined") ? (
   <img
     src={`https://www.bta.bg/upload/` + news.image_url}
     alt={`${news.media} Logo`}
@@ -222,10 +229,10 @@ const getClassification = async (fullText) => {
                     </h4>
                     <div className="row">
                       {news.matches.map((match, index) => (
-                        <div
+                        <div 
                           className="col-lg-6"
                           key={index}
-                          style={{ marginBottom: "10px" }}
+                          style={{ marginBottom: "10px", display: match.media? `auto` : "none"}}
                         >
                           <div className="blog-box">
                             <div className="post-media">
@@ -233,7 +240,8 @@ const getClassification = async (fullText) => {
                                 to={`/news/${match._id}`}
                                 title={match.title || "Related Content"}
                               >
-                                 {match.image_url ? (
+                        
+                                 {match.image_url && typeof match.image_url === "string" && !match.image_url.includes("undefined") ? (
   <img
     src={`https://www.bta.bg/upload/` + match.image_url}
     alt="BTA Logo"
@@ -324,19 +332,19 @@ const getClassification = async (fullText) => {
                                     }}
                                   ></span>
                                 ) : (
-                                  "No description available."
+                                  ""
                                 )}
                               </p>
-                              <small>
+                              <small style={{display: match.media? `auto` : "none"}}>
                                 <span>
-                                  Публикувано от {match.media || "Media"}
+                                 {match.media? `Публикувано от ${match.media}` : ""}
                                 </span>
                               </small>
                               <small>
                                 <span>
                                   {match.createdAt
                                     ? formatDate(match.createdAt)
-                                    : "Unknown Date"}
+                                    : ""}
                                 </span>
                               </small>
                             </div>

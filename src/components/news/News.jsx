@@ -321,7 +321,7 @@ export function News() {
                           <div className="post-media">
                             <a href="#" title="">
                                 
-                             {news.image_url != "undefined" ? (
+                             {news.image_url && typeof news.image_url === "string" && !news.image_url.includes("undefined") ? (
                                                  <img
                                  src={`https://www.bta.bg/upload/` + news.image_url}
                                  alt={`${news.media} Logo`}
