@@ -41,9 +41,10 @@ export function Navigation() {
       
     </li>
     <li className="nav-item">
-    <a className="nav-link" href="./най-актуална-документция-AI-в-проекта.docx" download style={{ fontSize: '16px' }}>
-        Актуална документация
-      </a>
+    <a className="nav-link" href="/най-актуална-документация-AI-в-проекта.docx" download>
+    Актуална документация
+</a>
+
     </li>
   </div>
 </ul>
