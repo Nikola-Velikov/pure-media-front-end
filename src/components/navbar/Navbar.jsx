@@ -38,6 +38,12 @@ export function Navigation() {
       <Link className="nav-link" to="/news" style={{ fontSize: '16px' }}>
         Новини
       </Link>
+      
+    </li>
+    <li className="nav-item">
+    <a className="nav-link" href="./най-актуална-документция-AI-в-проекта.docx" download style={{ fontSize: '16px' }}>
+        Актуална документация
+      </a>
     </li>
   </div>
 </ul>
