@@ -42,7 +42,7 @@ export function Navigation() {
     </li>
     <li className="nav-item">
     <a className="nav-link" href="/documentation.docx" download>
-    Актуална документация
+    Всичко за проекта
 </a>
 
     </li>
