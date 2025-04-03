@@ -1,8 +1,15 @@
 {
-    "rewrites": [
-      {
-        "source": "/(.*)",
-        "destination": "/index.html"
-      }
-    ]
-  }
+  "rewrites": [
+    {
+      "source": "/api/(.*)",  
+      "destination": "/api/$1"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/най-актуална-документация-AI-в-проекта.docx",
+      "destination": "/най-актуална-документация-AI-в-проекта.docx",
+      "statusCode": 200
+    }
+  ]
+}
